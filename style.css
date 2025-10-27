@@ -1,0 +1,41 @@
+/* Estilos para hacer la barra de desplazamiento más sutil y acorde al tema oscuro */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a5568; /* gray-600 */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2d3748; /* gray-700 */
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #4a5568 rgba(255, 255, 255, 0.05);
+}
+
+/* Ocultar las flechas del input numérico (aunque no se use, es buena práctica) */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+/* Transiciones suaves para elementos interactivos */
+button, a, input, select {
+    transition: all 0.2s ease-in-out;
+}

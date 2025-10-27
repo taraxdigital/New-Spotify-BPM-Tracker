@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BPM Tracker para Spotify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .spotify-icon {
+            width: 2rem;
+            height: 2rem;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 text-center">
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">BPM Tracker</h1>
+        <p class="text-xl text-gray-300 mb-12 max-w-2xl">
+            Descubre, analiza y organiza música por su tempo. Conecta tu cuenta de Spotify para empezar.
+        </p>
+        <button id="login-button" class="flex items-center justify-center gap-4 px-8 py-4 bg-[#1DB954] text-white font-bold rounded-full text-lg hover:bg-[#1ED760] transform hover:scale-105 transition-all duration-300 ease-in-out shadow-lg shadow-green-500/30">
+            <svg class="spotify-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.19 14.15c-.22.36-.68.48-1.04.26-2.9-1.78-6.52-2.17-10.88-1.18-.42.09-.84-.18-.93-.6s.18-.84.6-.93c4.72-1.07 8.75-.63 11.94 1.32.36.22.48.68.26 1.04v-.01zm.86-2.28c-.28.45-.85.59-1.3.32-3.24-1.98-7.78-2.5-12.02-1.37-.52.12-1.04-.2-1.16-.72s.2-1.04.72-1.16c4.7-1.23 9.7- .6 13.33 1.55.45.28.59.85.32 1.3v-.01zM18 9.32c-3.75-2.25-9.9-2.42-13.88-1.33-.6.16-1.2-.2-1.36-.8s.2-1.2.8-1.36C8.03 4.78 14.7 4.96 19 7.5c.54.32.74.96.42 1.5-.32.54-.96.74-1.5.42z" />
+            </svg>
+            Conectar con Spotify
+        </button>
+        <p class="text-xs text-gray-500 mt-8 max-w-md">
+            Necesitarás autorizar la aplicación para acceder a los datos de las canciones de Spotify. No almacenamos tu información personal.
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // REDIRIGE A LA APP SI YA HAY UN TOKEN VÁLIDO
+            const accessToken = localStorage.getItem('spotify_access_token');
+            const expiresAt = localStorage.getItem('spotify_token_expires_at');
+            if (accessToken && expiresAt && new Date().getTime() < parseInt(expiresAt)) {
+                window.location.href = 'app.html';
+            }
+        });
+
+        document.getElementById('login-button').addEventListener('click', () => {
+            // --- TU CLIENT ID YA ESTÁ CONFIGURADO ---
+            const clientId = 'ea05e5db55f64302a3b43ebc4742f22b'; 
+
+            // --- URI DE REDIRECCIONAMIENTO ---
+            // IMPORTANTE: Asegúrate de que esta URL EXACTA esté en la lista de "Redirect URIs"
+            // en la configuración de tu app en el dashboard de Spotify.
+            // Para desarrollo local, debe ser: http://127.0.0.1:5500/app.html
+            const redirectUri = window.location.origin + '/app.html'; 
+
+            // Permisos que la app solicita
+            const scope = 'user-read-private user-read-email';
+            
+            let url = 'https://accounts.spotify.com/authorize';
+            // Se usa 'token' para el Implicit Grant Flow (solo cliente)
+            url += '?response_type=token';
+            url += '&client_id=' + encodeURIComponent(clientId);
+            url += '&scope=' + encodeURIComponent(scope);
+            url += '&redirect_uri=' + encodeURIComponent(redirectUri);
+
+            window.location.href = url;
+        });
+    </script>
+</body>
+</html>
