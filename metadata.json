@@ -1,0 +1,5 @@
+{
+  "name": "Spotify BPM Tracker",
+  "description": "Una aplicación web para buscar canciones en Spotify, analizar su BPM (beats por minuto) y organizarlas en carpetas personalizadas. La aplicación utiliza el flujo de autenticación de Spotify (OAuth 2.0) para conectarse de forma segura a la cuenta del usuario y obtener datos reales de las canciones.",
+  "requestFramePermissions": []
+}
